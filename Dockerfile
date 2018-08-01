@@ -8,7 +8,7 @@ ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb30/$RELEASE.$BUILD/dow
 
 WORKDIR /
 
-RUN yum install -y xinetd libtommath libicu tar \
+RUN yum install -y libtommath libicu tar \
  && mkdir -p /tmp/RedDatabase \
  && mkdir -p /opt/RedDatabase \
  && echo "URL: $RELEASE_URL" \
@@ -23,7 +23,6 @@ RUN yum install -y xinetd libtommath libicu tar \
  && sed -i -e 's/^#WireCrypt = .*/WireCrypt = Disabled/' /opt/RedDatabase/firebird.conf \
  && sed -i -e '/^#AuthClient.*#Windows clients$/a\AuthClient = Legacy_Auth, Srp, WinSspi' /opt/RedDatabase/firebird.conf
 
-ADD firebird /etc/xinetd.d
 ADD SYSDBA.password /opt/RedDatabase
 ADD docker-entrypoint.sh /
 ADD alias.py /

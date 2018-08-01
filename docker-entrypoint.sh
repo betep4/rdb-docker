@@ -23,10 +23,6 @@ sed -i -e "s/^#ServerMode.*Super$/ServerMode = $SERVER_MODE/" /opt/RedDatabase/f
 sed -i -e "s/^#AuthServer = Srp$/AuthServer = $AUTH_SERVER/" /opt/RedDatabase/firebird.conf
 sed -i -e "s/^#RemoteAuxPort = 0$/RemoteAuxPort = $REMOTE_AUX_PORT/" /opt/RedDatabase/firebird.conf
 
-if [[ "$SERVER_MODE" = "Classic" ]]; then
-    service xinetd start
-else
-    /opt/RedDatabase/bin/rdbguard -daemon
-fi
+/opt/RedDatabase/bin/rdbguard -daemon
 
 $@
