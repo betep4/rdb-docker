@@ -20,9 +20,9 @@ fi
 echo "Server mode: $SERVER_MODE, auth server: $AUTH_SERVER"
 
 sed -i -e "s/^#ServerMode.*Super$/ServerMode = $SERVER_MODE/" /opt/RedDatabase/firebird.conf
-sed -i -e "s/^#AuthServer = Srp$/AuthServer = $AUTH_SERVER/" /opt/RedDatabase/firebird.conf
+sed -i -e "s/^#AuthServer = Srp256$/AuthServer = $AUTH_SERVER/" /opt/RedDatabase/firebird.conf
 sed -i -e "s/^#RemoteAuxPort = 0$/RemoteAuxPort = $REMOTE_AUX_PORT/" /opt/RedDatabase/firebird.conf
 
-/opt/RedDatabase/bin/rdbguard -daemon
+service reddatabase start
 
 $@

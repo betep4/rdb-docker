@@ -1,10 +1,10 @@
 FROM centos:6.6
 MAINTAINER Dmitriy Gorchakov "dmitry.gorchakov@red-soft.ru"
 
-ARG RELEASE=3.0.3
-ARG BUILD=88
+ARG RELEASE=4.0.0
+ARG BUILD=2354
 ARG ARCH=x86_64
-ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb30/$RELEASE.$BUILD/download/red-database:linux-$ARCH:$RELEASE.$BUILD:tar.gz
+ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb40/$RELEASE.$BUILD/download/red-database:linux-$ARCH-enterprise:$RELEASE.$BUILD:tar.gz
 
 WORKDIR /
 
@@ -24,6 +24,7 @@ RUN yum install -y libtommath libicu tar \
  && sed -i -e '/^#AuthClient.*#Windows clients$/a\AuthClient = Legacy_Auth, Srp, WinSspi' /opt/RedDatabase/firebird.conf
 
 ADD SYSDBA.password /opt/RedDatabase
+ADD reddatabase /etc/rc.d/init.d
 ADD docker-entrypoint.sh /
 ADD alias.py /
 

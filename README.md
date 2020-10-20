@@ -1,14 +1,14 @@
 rdb-docker
 ===============
 
-Docker образ для RedDatabase версии 3.0
+Docker образ для RedDatabase версии 4.0
 
 Сборка образа из Dockerfile
 ------------
 
-Собираем образ командой билд с именем centos-rdb-3.0 для версии RDB 3.0:
+Собираем образ командой билд с именем centos-rdb-4.0 для версии RDB 4.0:
 ```
-$ docker build . -t centos-rdb-3.0 --network host
+$ docker build . -t centos-rdb-4.0 --network host
 ```
 Перед сборкой образа нужно проверить доступность URL сборок RDB: `http://builds.red-soft.biz/release_hub/rdb30`
 В Docker файле образа можно настроить параметры дистрибутива, такие как версия релиза (RELEASE), сборка (BUILD) и архитектура проуессора (ARCH).
@@ -16,7 +16,7 @@ $ docker build . -t centos-rdb-3.0 --network host
 Проверим что образ в реестре:
 ```
 $ docker images | grep centos-rdb
-centos-rdb-3.0                            latest              942a733054d3        1 hours ago        281MB
+centos-rdb-4.0                            latest              942a733054d3        1 hours ago        281MB
 ```
 
 Запуск контейнерa
@@ -24,7 +24,7 @@ centos-rdb-3.0                            latest              942a733054d3      
 
 Запустим контейнер командой с пробросом портов и привязкой каталога с файлами БД:
 ```
-$ docker run -itd --rm --name centos-rdb-30 -p 5050:3050 -v /srv/db/fb30:/data -e ALIAS_DB=test_db=test.fdb centos-rdb-3.0
+$ docker run -itd --rm --name centos-rdb-40 -p 5050:3050 -v /srv/db/fb30:/data -e ALIAS_DB=test_db=test.fdb centos-rdb-4.0
 ```
 RDB3 позволяет запуститься в одной из 3-ёх архитектурах сервера:
 
@@ -36,7 +36,7 @@ RDB3 позволяет запуститься в одной из 3-ёх арх�
 ```
 $ docker ps
 CONTAINER ID  IMAGE            COMMAND                  CREATED             STATUS              PORTS                    NAMES
-8aa7e8c66627  centos-rdb-3.0   "/docker-entrypoin..."   About an hour ago   Up About an hour    0.0.0.0:5050->3050/tcp   centos-rdb-30
+8aa7e8c66627  centos-rdb-4.0   "/docker-entrypoin..."   About an hour ago   Up About an hour    0.0.0.0:5050->3050/tcp   centos-rdb-40
 ``` 
 Проверим утилитой `isql` что есть доступ к БД по порту 4050:
 ```
@@ -51,18 +51,18 @@ $ ./isql 'localhost/5050:test_db' -u sysdba -p masterkey
 Перед загрузкой авторизуемся командой `docker login`.
 После проставим тэг образу:
 ```
-$ docker tag centos-rdb-3.0 javaronok/centos-rdb-3.0
+$ docker tag centos-rdb-4.0 javaronok/centos-rdb-4.0
 ```
 и загрузим в репозиторий:
 ``` 
-$ docker push javaronok/centos-rdb-3.0
+$ docker push javaronok/centos-rdb-4.0
 ```
 
 Запуск контейнера на основе образа из DockerHub
 ------------------------------------
 
-Загружаем образ командой: `docker pull javaronok/centos-rdb-3.0`
+Загружаем образ командой: `docker pull javaronok/centos-rdb-4.0`
 и запускаем контейнер:
 ```
-$ docker run -itd --name centos-rdb-30 -p 5050:3050 -v /srv/db/fb30:/data -e SERVER_MODE=Super javaronok/centos-rdb-3.0
+$ docker run -itd --name centos-rdb-40 -p 5050:3050 -v /srv/db/fb30:/data -e SERVER_MODE=Super javaronok/centos-rdb-4.0
 ```
