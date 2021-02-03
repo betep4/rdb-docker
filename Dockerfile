@@ -2,7 +2,7 @@ FROM centos:6.6
 MAINTAINER Dmitriy Gorchakov "dmitry.gorchakov@red-soft.ru"
 
 ARG RELEASE=4.0.0
-ARG BUILD=2354
+ARG BUILD=2508
 ARG ARCH=x86_64
 ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb40/$RELEASE.$BUILD/download/red-database:linux-$ARCH-enterprise:$RELEASE.$BUILD:tar.gz
 
