@@ -8,7 +8,11 @@ ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb26/$RELEASE.$BUILD/dow
 
 WORKDIR /
 
-RUN yum install -y xinetd tar libgssapi_krb5.so libgssapi_krb5.so libkrb5.so libkrb5.so \
+RUN yum clean all \
+ && sed -i 's/mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/CentOS-Base.repo \
+ && sed -i 's/http:\/\/mirror.centos.org/https:\/\/vault.centos.org/' /etc/yum.repos.d/CentOS-Base.repo \
+ && sed -i 's/#baseurl=/baseurl=/' /etc/yum.repos.d/CentOS-Base.repo \
+ && yum install -y xinetd tar libgssapi_krb5.so libgssapi_krb5.so libkrb5.so libkrb5.so \
  && mkdir -p /opt/RedDatabase \
  && echo "URL: $RELEASE_URL" \
  && curl -s -L -o /tmp/rdb.tar.gz -O "$RELEASE_URL" \
