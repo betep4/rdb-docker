@@ -8,7 +8,11 @@ ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb30/$RELEASE.$BUILD/dow
 
 WORKDIR /
 
-RUN yum install -y libtommath libicu tar \
+RUN yum clean all \
+ && sed -i 's/mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/CentOS-Base.repo \
+ && sed -i 's/http:\/\/mirror.centos.org/https:\/\/vault.centos.org/' /etc/yum.repos.d/CentOS-Base.repo \
+ && sed -i 's/#baseurl=/baseurl=/' /etc/yum.repos.d/CentOS-Base.repo \
+ && yum install -y libtommath libicu tar \
  && mkdir -p /tmp/RedDatabase \
  && mkdir -p /opt/RedDatabase \
  && echo "URL: $RELEASE_URL" \
