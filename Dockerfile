@@ -1,4 +1,4 @@
-FROM centos:6.6
+FROM centos:7
 MAINTAINER Dmitriy Gorchakov "dmitry.gorchakov@red-soft.ru"
 
 ARG RELEASE=3.0.3
@@ -8,11 +8,7 @@ ARG RELEASE_URL=http://builds.red-soft.biz/release_hub/rdb30/$RELEASE.$BUILD/dow
 
 WORKDIR /
 
-RUN yum clean all \
- && sed -i 's/mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/CentOS-Base.repo \
- && sed -i 's/http:\/\/mirror.centos.org/https:\/\/vault.centos.org/' /etc/yum.repos.d/CentOS-Base.repo \
- && sed -i 's/#baseurl=/baseurl=/' /etc/yum.repos.d/CentOS-Base.repo \
- && yum install -y libtommath libicu tar \
+RUN yum install -y libtommath libicu tar \
  && mkdir -p /tmp/RedDatabase \
  && mkdir -p /opt/RedDatabase \
  && echo "URL: $RELEASE_URL" \
@@ -38,6 +34,6 @@ ENV AUTH_SERVER=Legacy_Auth
 ENV REMOTE_AUX_PORT=6001
 
 EXPOSE 3050/tcp
-EXPOSE 6000-7000/tcp
+EXPOSE 6001-6010/tcp
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["tail -f /opt/RedDatabase/firebird.log"]
